@@ -76,15 +76,15 @@
             color: #1a1a1a;
         }
 
-        /* High-Visibility Tooltip Labels */
+        /* High-Visibility Non-Colliding Tooltip Labels */
         .playground-tooltip {
             background-color: rgba(255, 255, 255, 0.98) !important;
             border: 2px solid #0056b3 !important;
             border-radius: 8px !important;
             color: #002b5c !important;
             font-weight: 800 !important;
-            font-size: 14px !important;
-            padding: 6px 12px !important;
+            font-size: 13px !important;
+            padding: 5px 10px !important;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
             white-space: nowrap !important;
             letter-spacing: 0.3px;
@@ -95,11 +95,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             color: #ffffff;
-            font-size: 20px;
+            font-size: 19px;
             border: 3px solid #ffffff;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -122,7 +122,7 @@
     <!-- Header Card -->
     <div class="map-header">
         <h2><i class="fa-solid fa-child-reaching" style="color: #0056b3;"></i> Abqaiq Playgrounds</h2>
-        <p>Noise-Reduced Satellite Map • Clean, direct playground naming without extra area labels.</p>
+        <p>Noise-Reduced Satellite Map • Smart label positioning prevents overlapping.</p>
     </div>
 
     <!-- Map Canvas -->
@@ -133,25 +133,22 @@
 
     <script>
         // 1. Base Tile Layers
-        // Pure Satellite (Zero background noise / facility text)
         var pureSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
             maxZoom: 20,
             attribution: '&copy; Google Maps'
         });
 
-        // Esri Clean Satellite
         var esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19,
             attribution: 'Tiles &copy; Esri'
         });
 
-        // Satellite with Road Overlay (Hybrid)
         var googleHybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
             maxZoom: 20,
             attribution: '&copy; Google Maps'
         });
 
-        // 2. Initialize Map with Pure Satellite as Default (Zero background noise)
+        // 2. Initialize Map
         var map = L.map('map', {
             center: [25.9460, 49.6678],
             zoom: 15,
@@ -159,54 +156,57 @@
             layers: [pureSatellite]
         });
 
-        // 3. Create Layer Groups for Zones
+        // 3. Layer Groups
         var circlesLayer = L.layerGroup().addTo(map);
         var lanesLayer   = L.layerGroup().addTo(map);
         var oasisLayer   = L.layerGroup().addTo(map);
         var parksLayer   = L.layerGroup().addTo(map);
 
-        // 4. Dataset with clean playground naming (removed "Area")
+        // 4. Dataset with Smart Directional Placement ('dir') to eliminate overlaps
         var playgrounds = [
             // Lanes & Streets Zone
-            { serial: 1,  name: "Gazzale Street Playground", lat: 25.9455066, lon: 49.6709255, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 2,  name: "Remal Lane Playground", lat: 25.9507596, lon: 49.6701363, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 3,  name: "Shamal Lane Playground", lat: 25.9502820, lon: 49.6675811, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 4,  name: "Shajar Street Playground", lat: 25.9510155, lon: 49.6663349, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 5,  name: "Shedgum Street Playground", lat: 25.9509269, lon: 49.6663396, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 6,  name: "Taif & Turban Streets Playground", lat: 25.9518629, lon: 49.6670055, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
-            { serial: 7,  name: "Yasmeen, Zahra & Wadi Streets Playground", lat: 25.9521168, lon: 49.6685243, category: "Street", zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes" },
+            { serial: 1,  name: "Gazzale Street Playground", lat: 25.9455066, lon: 49.6709255, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "right" },
+            { serial: 2,  name: "Remal Lane Playground", lat: 25.9507596, lon: 49.6701363, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
+            { serial: 3,  name: "Shamal Lane Playground", lat: 25.9502820, lon: 49.6675811, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "bottom" },
             
-            // Circles Zone (Cleaned names without "Area")
-            { serial: 8,  name: "J Circle Playground", lat: 25.9457466, lon: 49.6615395, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 9,  name: "F Circle Playground", lat: 25.9466673, lon: 49.6646756, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 10, name: "E Circle Playground", lat: 25.9457614, lon: 49.6660312, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 11, name: "E Circle 2 Playground", lat: 25.9449977, lon: 49.6657438, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 12, name: "D Circle Playground", lat: 25.9432391, lon: 49.6664177, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 13, name: "A Circle Playground", lat: 25.9396619, lon: 49.6654753, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 14, name: "B Circle Playground", lat: 25.9415270, lon: 49.6659051, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
-            { serial: 15, name: "C Circle Playground", lat: 25.9457400, lon: 49.6676073, category: "Circle", zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles" },
+            // Separated Neighbors: Shajar (Top) & Shedgum (Bottom)
+            { serial: 4,  name: "Shajar Street Playground", lat: 25.9510155, lon: 49.6663349, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
+            { serial: 5,  name: "Shedgum Street Playground", lat: 25.9509269, lon: 49.6663396, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "bottom" },
+            
+            { serial: 6,  name: "Taif & Turban Streets Playground", lat: 25.9518629, lon: 49.6670055, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "left" },
+            { serial: 7,  name: "Yasmeen, Zahra & Wadi Streets Playground", lat: 25.9521168, lon: 49.6685243, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
+            
+            // Circles Zone
+            { serial: 8,  name: "J Circle Playground", lat: 25.9457466, lon: 49.6615395, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 9,  name: "F Circle Playground", lat: 25.9466673, lon: 49.6646756, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 10, name: "E Circle Playground", lat: 25.9457614, lon: 49.6660312, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "left" },
+            { serial: 11, name: "E Circle 2 Playground", lat: 25.9449977, lon: 49.6657438, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
+            { serial: 12, name: "D Circle Playground", lat: 25.9432391, lon: 49.6664177, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 13, name: "A Circle Playground", lat: 25.9396619, lon: 49.6654753, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 14, name: "B Circle Playground", lat: 25.9415270, lon: 49.6659051, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 15, name: "C Circle Playground", lat: 25.9457400, lon: 49.6676073, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
             
             // Parks & Wildlife Zone
-            { serial: 16, name: "Deer Park Playground", lat: 25.9409475, lon: 49.6708105, category: "Park", zone: "Parks & Wildlife Zone", layer: parksLayer, pinClass: "pin-parks" },
+            { serial: 16, name: "Deer Park Playground", lat: 25.9409475, lon: 49.6708105, zone: "Parks & Wildlife Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" },
             
             // Oasis & Walk Zone
-            { serial: 17, name: "Oasis 2 Playground", lat: 25.9428156, lon: 49.6737321, category: "Oasis", zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis" },
-            { serial: 18, name: "Oasis 1 Playground", lat: 25.9429365, lon: 49.6740855, category: "Oasis", zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis" },
-            { serial: 19, name: "Abq WALK Playground", lat: 25.9432832, lon: 49.6728416, category: "Walk", zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis" }
+            { serial: 17, name: "Oasis 2 Playground", lat: 25.9428156, lon: 49.6737321, zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis", dir: "left" },
+            { serial: 18, name: "Oasis 1 Playground", lat: 25.9429365, lon: 49.6740855, zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis", dir: "right" },
+            { serial: 19, name: "Abq WALK Playground", lat: 25.9432832, lon: 49.6728416, zone: "Oasis & Walk Zone", layer: oasisLayer, pinClass: "pin-oasis", dir: "top" }
         ];
 
-        // 5. Playground Icon Generator (Larger, High-Contrast Pins)
+        // 5. Icon Generator
         function createPlaygroundIcon(pinClass) {
             return L.divIcon({
                 className: 'custom-pin-wrapper',
                 html: '<div class="custom-pin-icon ' + pinClass + '"><i class="fa-solid fa-child-reaching"></i></div>',
-                iconSize: [42, 42],
-                iconAnchor: [21, 21],
-                popupAnchor: [0, -21]
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+                popupAnchor: [0, -20]
             });
         }
 
-        // 6. Populate Playground Markers
+        // 6. Populate Markers with Dynamic Offsets
         playgrounds.forEach(function(item) {
             var icon = createPlaygroundIcon(item.pinClass);
             var marker = L.marker([item.lat, item.lon], { icon: icon });
@@ -223,11 +223,17 @@
             `;
             marker.bindPopup(popupContent);
 
-            // Large, bold permanent tooltips
+            // Compute exact offsets per direction
+            var labelOffset = [0, -20];
+            if (item.dir === 'bottom') labelOffset = [0, 20];
+            if (item.dir === 'left') labelOffset = [-20, 0];
+            if (item.dir === 'right') labelOffset = [20, 0];
+
+            // Bind Non-Colliding Tooltip
             marker.bindTooltip(item.name, {
                 permanent: true,
-                direction: 'top',
-                offset: [0, -20],
+                direction: item.dir,
+                offset: labelOffset,
                 className: 'playground-tooltip'
             });
 
