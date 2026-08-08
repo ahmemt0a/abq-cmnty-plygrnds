@@ -95,8 +95,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             color: #ffffff;
             font-size: 15px;
@@ -112,8 +112,8 @@
 
         /* Zone Colors */
         .pin-circles { background-color: #0056b3; }
-        .pin-lanes   { background-color: #00875a; }
-        .pin-oasis   { background-color: #d9381e; }
+        .pin-avenues  { background-color: #00875a; }
+        .pin-streets { background-color: #d9381e; }
         .pin-parks   { background-color: #6b21a8; }
     </style>
 </head>
@@ -121,7 +121,7 @@
 
     <!-- Header -->
     <div class="map-header">
-        <h2><i class="fa-solid fa-child-reaching" style="color: #0056b3;"></i>Abqaiq Community Playgrounds</h2>
+        <h2><i class="fa-solid fa-child-reaching" style="color: #0056b3;"></i>Children Playgrounds - Abqaiq Community</h2>
     </div>
 
     <!-- Map Canvas -->
@@ -147,8 +147,8 @@
 
         // 3. Esri World Imagery Satellite
         var esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            maxZoom: 20,
-            maxNativeZoom: 18,
+            maxZoom: 25,
+            maxNativeZoom: 20,
             attribution: 'Tiles &copy; Esri'
         });
 
@@ -162,39 +162,39 @@
 
         // Layer Groups
         var circlesLayer = L.layerGroup().addTo(map);
-        var lanesLayer   = L.layerGroup().addTo(map);
+        var avenuesLayer   = L.layerGroup().addTo(map);
         var streetLayer   = L.layerGroup().addTo(map);
         var parksLayer   = L.layerGroup().addTo(map);
 
         // Dataset with directional anchor control ('dir') to eliminate overlaps
         var playgrounds = [
-            // Lanes & Streets Zone
-            { serial: 1,  name: "Gazzale St Playground", lat: 25.945757, lon: 49.671108, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "right" },
-            { serial: 2,  name: "Remal Rd Playground", lat: 25.9502284, lon: 49.6702749, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
-            { serial: 3,  name: "Shamal Rd Playground", lat: 25.9505290, lon: 49.6677445, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "bottom" },
-            { serial: 4,  name: "Shajar Av Playground", lat: 25.9505263, lon: 49.6665289, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
-            { serial: 5,  name: "Shedgum St Playground", lat: 25.9512953, lon: 49.6659943, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "bottom" },
-            { serial: 6,  name: "Taif & Turban St Playground", lat: 25.9514794, lon: 49.6676313, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "left" },
-            { serial: 7,  name: "Yasmeen Av Playground", lat: 25.9524243, lon: 49.6690263, zone: "Lanes & Streets Zone", layer: lanesLayer, pinClass: "pin-lanes", dir: "top" },
+            // Avenue Area
+            { serial: 1,  name: "Remal Ln Playground", lat: 25.9502284, lon: 49.6702749, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
+            { serial: 2,  name: "Shamal Ln Playground", lat: 25.9505290, lon: 49.6677445, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "bottom" },
+            { serial: 3,  name: "Shajar Av Playground", lat: 25.9505263, lon: 49.6665289, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
+            { serial: 4,  name: "Shedgum Av Playground", lat: 25.9512953, lon: 49.6659943, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "bottom" },
+            { serial: 5,  name: "Taif & Trbn Av Playground", lat: 25.9514794, lon: 49.6676313, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "left" },
+            { serial: 6,  name: "Yasmeen Av Playground", lat: 25.9524243, lon: 49.6690263, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
             
-            // Circles Zone
-            { serial: 8,  name: "J Circle Playground", lat: 25.9455915, lon: 49.6615268, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
-            { serial: 9,  name: "F Circle Playground", lat: 25.9464685, lon: 49.6646441, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
-            { serial: 10, name: "25th Street Playground", lat: 25.9453916, lon: 49.6661267, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "left" },
-            { serial: 11, name: "E Circle Playground", lat: 25.9449278, lon: 49.6654917, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
-            { serial: 12, name: "D Circle Playground", lat: 25.9434289, lon: 49.6664169, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
-            { serial: 13, name: "A Circle Playground", lat: 25.9399782, lon: 49.6649713, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
-            { serial: 14, name: "B Circle Playground", lat: 25.941724, lon: 49.666075, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
-            { serial: 15, name: "C Circle Playground", lat: 25.9459005, lon: 49.6676211, zone: "Circles Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
+            // Circuler Zone
+            { serial: 7,  name: "J Circle Playground", lat: 25.9455915, lon: 49.6615268, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 8,  name: "F Circle Playground", lat: 25.9464685, lon: 49.6646441, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 9, name: "E Circle Playground", lat: 25.9449278, lon: 49.6654917, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
+            { serial: 10, name: "D Circle Playground", lat: 25.9434289, lon: 49.6664169, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 11, name: "A Circle Playground", lat: 25.9399782, lon: 49.6649713, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 12, name: "B Circle Playground", lat: 25.941724, lon: 49.666075, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
+            { serial: 13, name: "C Circle Playground", lat: 25.9459005, lon: 49.6676211, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
             
-            // Parks & Wildlife Zone
-            { serial: 16, name: "Deer Park Playground", lat: 25.9411456, lon: 49.6710012, zone: "Parks & Wildlife Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" },
+            // Parks
+            { serial: 14,  name: "Gazzale St Playground", lat: 25.945757, lon: 49.671108, zone: "Streets Zone", layer: streetLayer, pinClass: "pin-streets", dir: "right" },
+            { serial: 15, name: "16th St Playground", lat: 25.9426912, lon: 49.6738320, zone: "Street Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
+            { serial: 16, name: "15th St Playground", lat: 25.942790, lon: 49.674036, zone: "Street Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
+            { serial: 17, name: "25th Street Playground", lat: 25.9453916, lon: 49.6661267, zone: "Streets Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
             
-            // Stret Zone
-            { serial: 17, name: "16th St Playground", lat: 25.9426912, lon: 49.6738320, zone: "Street Zone", layer: streetLayer, pinClass: "pin-oasis", dir: "left" },
-            { serial: 18, name: "15th St Playground", lat: 25.942790, lon: 49.674036, zone: "Street Zone", layer: streetLayer, pinClass: "pin-oasis", dir: "left" },
-            { serial: 19, name: "Kids Hub Playground", lat: 25.9432832, lon: 49.6728416, zone: "Street Zone", layer: streetLayer, pinClass: "pin-oasis", dir: "right" },
-            { serial: 20, name: "Abq WALK Playground", lat: 25.9434992, lon: 49.6729961, zone: "Street Zone", layer: streetLayer, pinClass: "pin-oasis", dir: "top" }
+            // Strets
+             { serial: 18, name: "Deer Park Playground", lat: 25.9411456, lon: 49.6710012, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" },
+             { serial: 19, name: "Kids Hub Playground", lat: 25.939956, lon: 49.675726, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "right" },
+             { serial: 20, name: "Abq WALK Playground", lat: 25.9434992, lon: 49.6729961, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" }
         ];
 
         function createPlaygroundIcon(pinClass) {
@@ -245,10 +245,10 @@
         };
 
         var overlayMaps = {
-            '<span style="color:#0056b3; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Circles Zone</span>': circlesLayer,
-            '<span style="color:#00875a; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Lanes & Streets Zone</span>': lanesLayer,
-            '<span style="color:#d9381e; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Street Zone</span>': streetLayer,
-            '<span style="color:#6b21a8; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Parks & Wildlife Zone</span>': parksLayer
+            '<span style="color:#0056b3; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Circular Zone</span>': circlesLayer,
+            '<span style="color:#00875a; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Avenue Area</span>': avenuesLayer,
+            '<span style="color:#d9381e; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Street Zone</span>': streetsLayer,
+            '<span style="color:#6b21a8; font-weight:bold;"><i class="fa-solid fa-child-reaching"></i> Parks Zone</span>': parksLayer
         };
 
         L.control.layers(baseMaps, overlayMaps, {
