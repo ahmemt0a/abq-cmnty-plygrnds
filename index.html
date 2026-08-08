@@ -112,7 +112,7 @@
 
         /* Zone Colors */
         .pin-circles { background-color: #0056b3; }
-        .pin-avenues  { background-color: #00875a; }
+        .pin-avenues { background-color: #00875a; }
         .pin-streets { background-color: #d9381e; }
         .pin-parks   { background-color: #6b21a8; }
     </style>
@@ -169,12 +169,12 @@
         // Dataset with directional anchor control ('dir') to eliminate overlaps
         var playgrounds = [
             // Avenue Area
-            { serial: 1,  name: "Remal Ln Playground", lat: 25.9502284, lon: 49.6702749, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
-            { serial: 2,  name: "Shamal Ln Playground", lat: 25.9505290, lon: 49.6677445, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "bottom" },
-            { serial: 3,  name: "Shajar Av Playground", lat: 25.9505263, lon: 49.6665289, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
-            { serial: 4,  name: "Shedgum Av Playground", lat: 25.9512953, lon: 49.6659943, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "bottom" },
-            { serial: 5,  name: "Taif & Trbn Av Playground", lat: 25.9514794, lon: 49.6676313, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "left" },
-            { serial: 6,  name: "Yasmeen Av Playground", lat: 25.9524243, lon: 49.6690263, zone: "Avenue Area", layer: avenueLayer, pinClass: "pin-avenues", dir: "top" },
+            { serial: 1,  name: "Remal Ln Playground", lat: 25.9502284, lon: 49.6702749, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "top" },
+            { serial: 2,  name: "Shamal Ln Playground", lat: 25.9505290, lon: 49.6677445, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "bottom" },
+            { serial: 3,  name: "Shajar Av Playground", lat: 25.9505263, lon: 49.6665289, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "top" },
+            { serial: 4,  name: "Shedgum Av Playground", lat: 25.9512953, lon: 49.6659943, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "bottom" },
+            { serial: 5,  name: "Taif & Trbn Av Playground", lat: 25.9514794, lon: 49.6676313, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "left" },
+            { serial: 6,  name: "Yasmeen Av Playground", lat: 25.9524243, lon: 49.6690263, zone: "Avenue Area", layer: avenuesLayer, pinClass: "pin-avenues", dir: "top" },
             
             // Circuler Zone
             { serial: 7,  name: "J Circle Playground", lat: 25.9455915, lon: 49.6615268, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
@@ -185,13 +185,13 @@
             { serial: 12, name: "B Circle Playground", lat: 25.941724, lon: 49.666075, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "top" },
             { serial: 13, name: "C Circle Playground", lat: 25.9459005, lon: 49.6676211, zone: "Circular Zone", layer: circlesLayer, pinClass: "pin-circles", dir: "right" },
             
-            // Parks
-            { serial: 14,  name: "Gazzale St Playground", lat: 25.945757, lon: 49.671108, zone: "Streets Zone", layer: streetLayer, pinClass: "pin-streets", dir: "right" },
-            { serial: 15, name: "16th St Playground", lat: 25.9426912, lon: 49.6738320, zone: "Street Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
-            { serial: 16, name: "15th St Playground", lat: 25.942790, lon: 49.674036, zone: "Street Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
-            { serial: 17, name: "25th Street Playground", lat: 25.9453916, lon: 49.6661267, zone: "Streets Zone", layer: streetLayer, pinClass: "pin-streets", dir: "left" },
+            // Streets Zone
+            { serial: 14,  name: "Gazzale St Playground", lat: 25.945757, lon: 49.671108, zone: "Streets Zone", layer: streetsLayer, pinClass: "pin-streets", dir: "right" },
+            { serial: 15, name: "16th St Playground", lat: 25.9426912, lon: 49.6738320, zone: "Street Zone", layer: streetsLayer, pinClass: "pin-streets", dir: "left" },
+            { serial: 16, name: "15th St Playground", lat: 25.942790, lon: 49.674036, zone: "Street Zone", layer: streetsLayer, pinClass: "pin-streets", dir: "left" },
+            { serial: 17, name: "25th Street Playground", lat: 25.9453916, lon: 49.6661267, zone: "Streets Zone", layer: streetsLayer, pinClass: "pin-streets", dir: "left" },
             
-            // Strets
+            // Parks Zone
              { serial: 18, name: "Deer Park Playground", lat: 25.9411456, lon: 49.6710012, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" },
              { serial: 19, name: "Kids Hub Playground", lat: 25.939956, lon: 49.675726, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "right" },
              { serial: 20, name: "Abq WALK Playground", lat: 25.9434992, lon: 49.6729961, zone: "Parks Zone", layer: parksLayer, pinClass: "pin-parks", dir: "top" }
